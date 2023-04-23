@@ -1,7 +1,7 @@
 #include <stdio.h>
-#include <cstdlib>
+#include <stdlib.h>
 #include <mpi.h>
-#include <iostream>
+// #include <iostream>
 
 double time_pingpong(int proc0, int proc1, long Nrepeat, long Nsize, MPI_Comm comm) {
   int rank;
