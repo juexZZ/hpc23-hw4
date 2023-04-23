@@ -1,0 +1,2 @@
+This is proc 0, Nloops = 10, comm size = 4, ring_value = 0
+slurmstepd: error: *** JOB 32716212 ON ga010 CANCELLED AT 2023-04-23T02:54:59 ***

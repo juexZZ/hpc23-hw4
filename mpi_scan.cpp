@@ -12,16 +12,18 @@ void scan_seq(long* prefix_sum, const long* A, long n) {
   }
 }
 
-int main(){
-    long N = 100000000;
-    MPI_init(&argc, &argv);
+int main(int argc, char**argv){
+    long N = 1000;
+    MPI_Init(&argc, &argv);
     MPI_Comm comm = MPI_COMM_WORLD;
     int rank, nprocs;
     MPI_Comm_rank(comm, &rank);
     MPI_Comm_size(comm, &nprocs);
 
     // initialize A on process 0
-    long* A, B, B0;
+    long* A; 
+    long* B; 
+    long* B0;
     if (rank == 0){
         A = (long*) malloc(N * sizeof(long));
         for (long i = 0; i < N; i++) A[i] = rand();

@@ -8,9 +8,10 @@
 
 double int_ring(int Nloops, int rank, int left, int right, int& ring_value, MPI_Comm comm){
     //start
-    MPI_barier(comm);
+    MPI_Barrier(comm);
     double tt = MPI_Wtime();
     for (int i=0; i<Nloops; i++){
+	MPI_Status status;
         if (rank == 0 && i == 0){
             // start at process 0 with value 0
             MPI_Send(&ring_value, 1, MPI_INT, right, i, comm);
@@ -26,22 +27,23 @@ double int_ring(int Nloops, int rank, int left, int right, int& ring_value, MPI_
     return tt;
 }
 
-double array_ring(int Nloops, int rank, int left, int right, long array_size){
+double array_ring(int Nloops, int rank, int left, int right, long array_size, MPI_Comm comm){
     //start
-    char* msg = (char*) malloc(Nsize);
-    for (long i = 0; i < Nsize; i++) msg[i] = 42;
+    char* msg = (char*) malloc(array_size);
+    for (long i = 0; i < array_size; i++) msg[i] = 42;
 
-    MPI_barier(comm);
+    MPI_Barrier(comm);
     double tt = MPI_Wtime();
     for (int i=0; i<Nloops; i++){
-        if (rank == 0 && i == 0){
+        MPI_Status status;
+	if (rank == 0 && i == 0){
             // start at process 0 with value 0
-            MPI_Send(&ring_array, array_size, MPI_CHAR, right, i, comm);
-            MPI_Recv(&ring_array, array_size, MPI_CHAR, left, i, comm, &status);
+            MPI_Send(&msg, array_size, MPI_CHAR, right, i, comm);
+            MPI_Recv(&msg, array_size, MPI_CHAR, left, i, comm, &status);
         }
         else{
-            MPI_Recv(&ring_array, array_size, MPI_CHAR, left, i, comm, &status);
-            MPI_Send(&ring_array, array_size, MPI_CHAR, right, i, comm);
+            MPI_Recv(&msg, array_size, MPI_CHAR, left, i, comm, &status);
+            MPI_Send(&msg, array_size, MPI_CHAR, right, i, comm);
         }
     }
     tt = MPI_Wtime() - tt;
@@ -59,17 +61,17 @@ int main(int argc, char *argv[]){
     MPI_Comm comm = MPI_COMM_WORLD;
     MPI_Comm_rank(comm, &rank);
     MPI_Comm_size(comm, &size);
-    left = rank-1;
-    right = rank+1;
+    int left = rank-1;
+    int right = rank+1;
     if (left < 0) left = size-1;
     if (right > size-1) right = 0;
     if (!rank) printf("This is proc 0, Nloops = %d, comm size = %d, ring_value = %d\n", Nloops, size, ring_value);
-    double tt = int_ring(Nloops, rank, left, right, ring_value);
+    double tt = int_ring(Nloops, rank, left, right, ring_value, comm);
     if (!rank) printf("This is proc %d, Nloops = %d, comm size = %d, ring_value = %d\n", rank, Nloops, size, ring_value);
     if (!rank) printf("Int ring latency = %e ms\n", tt/Nloops*1000);
     // array ring
     long array_size = 2048*1024;
-    tt_array = array_ring(Nloops, rank, left, right, array_size);
+    double tt_array = array_ring(Nloops, rank, left, right, array_size, comm);
     if(!rank) printf("Array ring get bandwidth = %e GB/s\n", (array_size*Nloops)/tt_array/1024/1024/1024);
 
     MPI_Finalize();
