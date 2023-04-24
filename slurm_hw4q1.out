@@ -1,0 +1,4 @@
+process 0 is at node cs488.hpc.nyu.edu
+process 1 is at node cs489.hpc.nyu.edu
+pingpong latency: 1.110422e-03 ms
+pingpong bandwidth: 1.002979e+01 GB/s

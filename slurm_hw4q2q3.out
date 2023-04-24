@@ -1,48 +1,24 @@
+process 0 is at node cs493.hpc.nyu.edu
 This is proc 0, Nloops = 10, comm size = 4, ring_value = 0
-[cs303:2035357:0:2035357]        rndv.c:2410 Assertion `status == UCS_OK' failed
-This is proc 0, Nloops = 10, comm size = 4, ring_value = 54
-Int ring latency = 2.121222e+00 ms
-[1682237448.590776] [cs303:2035357:0]          ib_log.c:254  UCX  ERROR ibv_reg_mr(address=0x7ffc0414d990, length=2000016, access=0xf) failed: Bad address
-[1682237448.590785] [cs303:2035357:0]          ucp_mm.c:166  UCX  ERROR failed to register address 0x7ffc0414d998 mem_type bit 0x1 length 2000000 on md[4]=mlx5_0: Input/output error (md reg_mem_types 0x1)
-[1682237448.590789] [cs303:2035357:0]     ucp_request.c:524  UCX  ERROR failed to register user buffer datatype 0x8 address 0x7ffc0414d998 len 2000000: Input/output error
-==== backtrace (tid:2035357) ====
- 0 0x00000000000796b8 ucp_rndv_rtr_handler()  ???:0
- 1 0x000000000003f6e9 uct_rc_mlx5_iface_check_rx_completion()  ???:0
- 2 0x00000000000488ca ucp_worker_progress()  ???:0
- 3 0x00000000000051cd mca_pml_ucx_send()  ???:0
- 4 0x000000000008b08b MPI_Send()  ???:0
- 5 0x0000000000408802 array_ring()  ???:0
- 6 0x0000000000408499 main()  ???:0
- 7 0x000000000003acf3 __libc_start_main()  ???:0
- 8 0x00000000004085be _start()  ???:0
-=================================
-[cs303:2035357] *** Process received signal ***
-[cs303:2035357] Signal: Aborted (6)
-[cs303:2035357] Signal code:  (-6)
-[cs303:2035357] [ 0] /lib64/libpthread.so.0(+0x12ce0)[0x14ba0a908ce0]
-[cs303:2035357] [ 1] /lib64/libc.so.6(gsignal+0x10f)[0x14ba0a57fa9f]
-[cs303:2035357] [ 2] /lib64/libc.so.6(abort+0x127)[0x14ba0a552e05]
-[cs303:2035357] [ 3] /lib64/libucs.so.0(+0x5de66)[0x14b9fad76e66]
-[cs303:2035357] [ 4] /lib64/libucs.so.0(ucs_fatal_error_format+0x10f)[0x14b9fad76f7f]
-[cs303:2035357] [ 5] /lib64/libucp.so.0(ucp_rndv_rtr_handler+0x5c8)[0x14b9fb58a6b8]
-[cs303:2035357] [ 6] /lib64/ucx/libuct_ib.so.0(+0x3f6e9)[0x14b9fa48b6e9]
-[cs303:2035357] [ 7] /lib64/libucp.so.0(ucp_worker_progress+0x6a)[0x14b9fb5598ca]
-[cs303:2035357] [ 8] /share/apps/openmpi/4.0.5/gcc/lib/openmpi/mca_pml_ucx.so(mca_pml_ucx_send+0x14d)[0x14b9fb9ef1cd]
-[cs303:2035357] [ 9] /share/apps/openmpi/4.0.5/gcc/lib/libmpi.so.40(PMPI_Send+0x11b)[0x14ba0b70808b]
-[cs303:2035357] [10] ./int_ring[0x408802]
-[cs303:2035357] [11] ./int_ring[0x408499]
-[cs303:2035357] [12] /lib64/libc.so.6(__libc_start_main+0xf3)[0x14ba0a56bcf3]
-[cs303:2035357] [13] ./int_ring[0x4085be]
-[cs303:2035357] *** End of error message ***
---------------------------------------------------------------------------
-Primary job  terminated normally, but 1 process returned
-a non-zero exit code. Per user-direction, the job has been aborted.
---------------------------------------------------------------------------
---------------------------------------------------------------------------
-mpiexec noticed that process rank 0 with PID 0 on node cs303 exited on signal 6 (Aborted).
---------------------------------------------------------------------------
+process 1 is at node cs494.hpc.nyu.edu
+process 3 is at node cs496.hpc.nyu.edu
+process 2 is at node cs495.hpc.nyu.edu
+This is proc 0, Nloops = 10, comm size = 4, ring_value = 60
+Int ring latency = 3.865903e-01 ms
+Array ring get bandwidth = 1.120697e+01 GB/s
+*******
+process 0 is at node cs493.hpc.nyu.edu
+This is proc 0, Nloops = 100, comm size = 4, ring_value = 0
+process 1 is at node cs494.hpc.nyu.edu
+process 2 is at node cs495.hpc.nyu.edu
+process 3 is at node cs496.hpc.nyu.edu
+This is proc 0, Nloops = 100, comm size = 4, ring_value = 600
+Int ring latency = 3.218137e-02 ms
+Array ring get bandwidth = 1.169816e+01 GB/s
+*******
+Question 3 below
 rank 1 has offset 262700300052
 rank 2 has offset 283260815703
 rank 0 has offset 280834258674
-rank 3 has offset 264395763066
 check on process 0, error = 0
+rank 3 has offset 264395763066

@@ -10,4 +10,6 @@
  
 
 mpiexec ./int_ring 10
+mpiexec ./int_ring 100
+echo 'Question 3 below'
 mpiexec ./mpi_scan

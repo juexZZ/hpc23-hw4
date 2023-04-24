@@ -48,7 +48,10 @@ int main(int argc, char** argv) {
   int rank;
   MPI_Comm comm = MPI_COMM_WORLD;
   MPI_Comm_rank(comm, &rank);
-
+  char proc_name[MPI_MAX_PROCESSOR_NAME];
+  int namelen;
+  MPI_Get_processor_name(proc_name, &namelen);
+  printf("process %d is at node %s\n", rank, proc_name);
   long Nrepeat = 1000;
   double tt = time_pingpong(proc0, proc1, Nrepeat, 1, comm);
   if (!rank) printf("pingpong latency: %e ms\n", tt/Nrepeat * 1000);
